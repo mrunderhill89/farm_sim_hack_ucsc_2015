@@ -1,16 +1,22 @@
-define(['backbone'],function(Backbone){
+define(['underscore','backbone', 'models/nutrient'],function(_,Backbone, nutrients){
+    var plant_defaults = _.reduce(nutrients, function(memo, values, name){
+        _.each(values, function(value,key){
+            memo[name+"_"+key] = value
+        })
+        return memo;
+    }, {});
     var Plant = Backbone.Model.extend({
-        defaults : {
-            species: "Unnamed",
+        defaults : _.extend(plant_defaults, {
             health: 100.0,
-            ph_ideal: 7.0,
-            ph_tolerance: 10.0,
-            ph_ideal_regen: 0.1
-        },
+            species:"Unnamed"
+        }),
         draw_soil: function(time, soil){
-            var health = this.get("health");
-            var ph_diff = (Math.abs(this.get("ph_ideal") - soil.get("ph")))/this.get("ph_tolerance") - this.get("ph_ideal_regen");
-            this.set('health', Math.max(health - (ph_diff*time),0) );
+            this.set('health', _.reduce(_.keys(nutrients), function(health, nutrient){
+                return this.calculate_nutrient(nutrient, soil[nutrient], health);
+            }.bind(this), this.get('health')));
+        },
+        calculate_nutrient: function(nutrient, value, health){
+            return health;
         },
         update: function(time){
         }
