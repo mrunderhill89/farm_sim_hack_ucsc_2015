@@ -17,12 +17,17 @@ define(['underscore', 'backbone'],function(_, Backbone){
             });
         },
         default_calculate: function(health, soil_value){
+            /*  For now, the default health function
+                is a simple parabolic equation, automatically
+                scaled from the vertex height to whatever the user 
+                put in for the multiplier. Different plants can 
+                replace this function for more accuracy.
+            */
             var defaults = this.get('plant_defaults');
-            var diff = (Math.min(
-                            (defaults.min - soil_value)
-                            *(soil_value - defaults.max),
-                        0)
-                        *defaults.multiplier) 
+            var scale = defaults.multiplier / Math.pow((defaults.min - defaults.max)/2,2);
+            var diff = ((defaults.min - soil_value)
+                       *(soil_value - defaults.max)
+                        *scale) 
                     + defaults.constant;
             return Math.max(health + diff, 0);
         }
