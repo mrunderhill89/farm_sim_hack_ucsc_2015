@@ -2,6 +2,7 @@ define(['underscore','backbone', 'collections/nutrients'],function(_,Backbone, N
     var Plant = Backbone.Model.extend({
         defaults : {
             health: 100.0,
+            footprint: 0,
             species:"Unnamed",
             calculate_nutrient: {}
         },

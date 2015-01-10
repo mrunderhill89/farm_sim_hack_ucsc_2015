@@ -3,7 +3,8 @@ require.config({
     jquery: 'libs/jquery/jquery',
     underscore: 'libs/underscore/underscore',
     backbone: 'libs/backbone/backbone',
-  }
+    kinetic: 'libs/kinetic/kinetic'
+  },
 });
 
 require(['jquery', 'underscore', 'backbone', 'models/plant', 'views/plant_view',

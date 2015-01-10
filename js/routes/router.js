@@ -1,4 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'models/environment', 'views/environ_view', 'routes/api_soil'], function($, _, Backbone, Environment, EnvironView, SoilAPI){
+define(['jquery', 'underscore', 'backbone', 'kinetic',
+        'models/environment', 'views/kinetic/environ_view'], function($, _, Backbone, Kinetic, Environment, EnvironView){
     var Router = Backbone.Router.extend({
         routes: {
             "init": "initialize",
@@ -10,25 +11,28 @@ define(['jquery', 'underscore', 'backbone', 'models/environment', 'views/environ
         current_view: null,
         el: '',
         initialize: function(params){
-            this.el = (params && params.el) || "#view";
-            this.$el = $(this.el); 
+            this.el = (params && params.el) || "view";
+            this.stage = new Kinetic.Stage({
+                container: this.el,
+                width: (params && params.width) || 800,
+                height: (params && params.height) || 600
+            });
             this.reset(params);
             this.render();
         },
         reset: function(params){
             this.current_model = new Environment((params && params.environment));
-            this.current_view = new EnvironView({model: this.current_model});
+            this.current_view = new EnvironView({collection: this.current_model.get("garden")});
             return this;
         },
         render: function(){
-            this.$el.empty();
             this.current_view.render();
-            this.$el.append(this.current_view.$el).append(this.add_soil);
+            this.stage.add(this.current_view.layer);
             return this;
         },
         update: function(time){
             this.current_model.update(time);
-            this.current_view.update(time);
+            this.current_view.render();
         }
     });
     var app_router = new Router();

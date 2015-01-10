@@ -7,7 +7,14 @@ define(['backbone'],function(Backbone){
             feed: 0
         },
         initialize: function(params){
-            console.log(this.attributes);
+            this.on("change:plant", function(next,last){
+                if (last){
+                    last.set("footprint", last.get("footprint")-1);
+                }
+                if (next){
+                    next.set("footprint", next.get("footprint")+1);
+                }
+            });
         },
         update: function(time){
             var plant = this.get("plant");
