@@ -13,8 +13,8 @@ require(['jquery', 'underscore', 'backbone', 'models/plant', 'views/plant_view',
     var sample_soil = new Soil({plant:sample_plant, ph:6.0});
     var sample_environ = new Environment();
     sample_environ.get("garden").add(sample_soil);
-    sample_environ.update(1.0);
-    
+        console.log(sample_plant);
+
     //var sample_environ_view = new EnvironView({el:'#view', model:sample_environ});
     //sample_environ_view.render();
     var sample_plant_view = new PlantView({el:'#view', model: sample_plant});

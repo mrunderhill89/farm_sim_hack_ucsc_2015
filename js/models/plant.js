@@ -3,12 +3,14 @@ define(['backbone'],function(Backbone){
         defaults : {
             species: "Unnamed",
             health: 100.0,
-            ideal_ph: 7.0
+            ph_ideal: 7.0,
+            ph_tolerance: 10.0,
+            ph_ideal_regen: 0.1
         },
         draw_soil: function(time, soil){
             var health = this.get("health");
-            var ph_diff = Math.abs(this.get("ideal_ph") - soil.get("ph"));
-            this.set('health', Math.max(health - (ph_diff*time),0) );            
+            var ph_diff = (Math.abs(this.get("ph_ideal") - soil.get("ph")))/this.get("ph_tolerance") - this.get("ph_ideal_regen");
+            this.set('health', Math.max(health - (ph_diff*time),0) );
         },
         update: function(time){
         }
