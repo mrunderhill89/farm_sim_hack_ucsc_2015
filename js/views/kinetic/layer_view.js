@@ -4,9 +4,26 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
             this.layer = (params && params.layer) 
                 || new Kinetic.Layer();
             this.sprite_views = [];
+            this.collection.on("add", this.add_sprite);
+            this.collection.on("remove", this.remove_sprite);
+            this.collection.each(this.add_sprite.bind(this));
+        },
+        add_sprite: function(model, id){
+            var view;
+            if(this.model_view){ //Generate custom sprite if one is defined.
+                view = new this.model_view({model:model});
+            } else { //Just make a default sprite.
+                view = new SpriteView({model:model});
+            }
+            this.sprite_views[id] = view;
+            view.render();
+            this.layer.add(view.sprite);
+        },
+        remove_sprite: function(model, id){
+            
         },
         render: function(){
-            this.layer.destroyChildren();
+            /*
             this.sprite_views = _.reduce(
                 this.collection.map(
                     function(model,id){
@@ -14,11 +31,6 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
                         if(this.sprite_views[id]){  //Re-use existing model views if possible.
                             view = this.sprite_views[id];
                         } else {                    
-                            if(this.model_view){ //Generate custom sprite if one is defined.
-                                view = new this.model_view({model:model});
-                            } else { //Just make a default sprite.
-                                view = new SpriteView({model:model}); 
-                            }
                             view.render();
                         }
                         this.layer.add(view.sprite);
@@ -28,6 +40,7 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
                     sprites[id] = sprite;
                     return sprites;
                 }, []);
+            */
             this.layer.batchDraw();
         }
     });
