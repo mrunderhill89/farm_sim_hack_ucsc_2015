@@ -1,10 +1,8 @@
-define(['jquery', 'backbone', 'models/environment', 'views/environ_view'], function($, Backbone, Environment, EnvironView){
+define(['jquery', 'underscore', 'backbone', 'models/environment', 'views/environ_view', 'routes/api_soil'], function($, _, Backbone, Environment, EnvironView, SoilAPI){
     var Router = Backbone.Router.extend({
         routes: {
             "init": "initialize",
             "init/*params":"initialize",
-            "add_soil":"add_soil",
-            "add_plant":"add_plant",
             "time":"time",
             "*actions": "defaultRoute"
         },
@@ -14,19 +12,23 @@ define(['jquery', 'backbone', 'models/environment', 'views/environ_view'], funct
         initialize: function(params){
             this.el = (params && params.el) || "#view";
             this.$el = $(this.el); 
-            
             this.reset(params);
             this.render();
         },
         reset: function(params){
             this.current_model = new Environment((params && params.environment));
-            this.current_view = new EnvironView({model: this.current_model, router:this});
+            this.current_view = new EnvironView({model: this.current_model});
             return this;
         },
         render: function(){
             this.$el.empty();
-            this.$el.append(this.current_view.$el).append(this.reset_link);
+            this.current_view.render();
+            this.$el.append(this.current_view.$el).append(this.add_soil);
             return this;
+        },
+        update: function(time){
+            this.current_model.update(time);
+            this.current_view.update(time);
         }
     });
     var app_router = new Router();

@@ -8,7 +8,7 @@ define(['backbone', 'collections/garden'],function(Backbone, Garden){
             temperature: 65
         },
         initialize: function(params){
-            this.set('garden', (params && params.garden) || new Garden());
+            this.set('garden', (params && params.garden) || new Garden().fill(1,1));
         },
         update: function(time){
             this.get('garden').each(function(soil){soil.update(time)});

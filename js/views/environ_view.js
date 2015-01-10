@@ -6,22 +6,29 @@ define(['jquery', 'backbone', 'models/environment', 'views/soil_view'],function(
         initialize: function(params){
             this.soil_views = [];
             this.simulation_running = true;
+            this.$rt = $("<div>");
         },
         model: Environment,
         render: function(){
+            this.$el.empty()
+            .append(this.$rt)
+            .append($("<a>").html("Add Soil").attr({href:'javascript:;',id:'add_soil'}).click(function(e){
+                e.preventDefault();
+                this.model.get("garden").create();
+            }.bind(this)));
+        },
+        update: function(){
             var humidity = this.model.get("humidity");
             var temperature = this.model.get("temperature");
-            this.$el.empty().append("Environment:"+ humidity + ":" + temperature);
-            this.model.get("garden").each(function(soil, id){
+            var garden = this.model.get("garden");
+            this.$rt.empty().append("Environment:"+ humidity + ":" + temperature);
+            garden.each(function(soil, id){
                 if (!this.soil_views[id]){
                     this.soil_views[id] = new SoilView({model:soil});
                 }
                 this.soil_views[id].render();
-                this.$el.append(this.soil_views[id].$el);
+                this.$rt.append(this.soil_views[id].$el);
             }.bind(this));
-            if (this.simulation_running){
-                this.model.update(1.0);//Replace with time from main loop.
-            }
         }
     });
     return EnvironView;

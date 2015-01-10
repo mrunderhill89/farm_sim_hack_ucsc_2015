@@ -18,7 +18,7 @@ require(['jquery', 'underscore', 'backbone', 'models/plant', 'views/plant_view',
     // Simple main loop for real-time updates. Replace later with RequestAnimationFrame.
     var ONE_FRAME_TIME = 100.0;
     function mainLoop(){
-        router.current_view.render();
+        router.update();
     }
     setInterval(mainLoop, ONE_FRAME_TIME);
 });
