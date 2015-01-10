@@ -1,17 +1,30 @@
 define(['underscore', 'backbone'],function(_, Backbone){
     var Nutrient = Backbone.Model.extend({
-        defaults:{
-            plant_defaults: {
-                ideal: 0.0,
-                min_limit: -1.0,
-                max_limit: 1.0,
+        initialize:function(params){
+            this.plant_defaults = _.defaults((params && params.plant_defaults), 
+            {
+                min: 0.0,
+                max: 1.0,
                 multiplier: 1.0,
-                regen: 1.0
-            },
-            soil_defaults: {
-            }
+                constant: 0.0
+            });
+            this.soil_defaults = _.defaults((params && params.soil_defaults), 
+            {
+                min: 0.0,
+                max: 1.0,
+                multiplier: 1.0,
+                constant: 0.0
+            });
         },
         default_calculate: function(health, soil_value){
+            var defaults = this.get('plant_defaults');
+            var diff = (Math.min(
+                            (defaults.min - soil_value)
+                            *(soil_value - defaults.max),
+                        0)
+                        *defaults.multiplier) 
+                    + defaults.constant;
+            return Math.max(health + diff, 0);
         }
     });
     return Nutrient;

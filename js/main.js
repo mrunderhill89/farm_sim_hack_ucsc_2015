@@ -10,7 +10,7 @@ require(['jquery', 'underscore', 'backbone', 'models/plant', 'views/plant_view',
         'models/soil', 'views/soil_view', 'models/environment', 'views/environ_view'],
     function($, _, Backbone, Plant, PlantView, Soil, SoilView, Environment, EnvironView){
     var sample_plant = new Plant({species:"Lettuce"});
-    var sample_soil = new Soil({plant:sample_plant, ph:6.0});
+    var sample_soil = new Soil({plant:sample_plant, ph:7.3});
     var sample_environ = new Environment();
     sample_environ.get("garden").add(sample_soil);
 
