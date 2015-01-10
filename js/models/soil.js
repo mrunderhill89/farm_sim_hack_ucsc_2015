@@ -7,6 +7,10 @@ define(['backbone'],function(Backbone){
             feed: 0
         },
         update: function(time){
+            var plant = this.get("plant");
+            if (plant){
+                plant.draw_soil(time, this);
+            }
         }
     });
     return Soil;
