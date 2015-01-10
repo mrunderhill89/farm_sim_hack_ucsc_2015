@@ -28,6 +28,7 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
                     sprites[id] = sprite;
                     return sprites;
                 }, []);
+            this.layer.batchDraw();
         }
     });
     return LayerView;

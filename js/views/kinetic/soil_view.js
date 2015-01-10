@@ -15,8 +15,11 @@ define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic
                 stroke: 'black',
                 strokeWidth: 4
             });
+            this.sprite.on("mousedown touchstart", 
+                function(e){console.log("Hello!")}
+            );
             //Do other graphics tweaks here.
-            return this.sprite;
+            return this;
         }
     });
     return SoilView;
