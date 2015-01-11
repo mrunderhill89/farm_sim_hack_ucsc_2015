@@ -2,6 +2,9 @@ define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic
     var SoilView = SpriteView.extend({
         width:  64,
         height: 64,
+        update: function(model, options){
+            //If the soil model changes, update the sprite here.
+        },
         render: function(){
             var soil = this.model;
             var x = this.width * soil.get("x");
@@ -11,7 +14,7 @@ define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic
                 y: y,
                 width: this.width,
                 height: this.height,
-                fill: 'green',
+                fill: 'brown',
                 stroke: 'black',
                 strokeWidth: 4
             });

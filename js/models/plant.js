@@ -2,16 +2,16 @@ define(['underscore','backbone_associations', 'collections/nutrients', 'models/s
     var Plant = Backbone.AssociatedModel.extend({
         defaults : {
             health: 100.0,
-            footprint: 0,
             species:"Unnamed",
-            calculate_nutrient: {}
+            calculate_nutrient: {},
+            footprint: []
         },
-        associations:[
+        relations:[
             {
                 type:Backbone.Many,
                 key:'footprint',
-                relatedModel:Soil
-            }
+                relatedModel:function(){ return require("models/soil");}
+            },
         ],
         draw_soil: function(time, soil){
             var health = _.reduce(Nutrients.defaults,

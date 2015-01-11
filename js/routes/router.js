@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'backbone', 'kinetic',
         },
         reset: function(params){
             this.current_model = new Environment((params && params.environment));
-            this.current_view = new EnvironView({collection: this.current_model.get("garden")});
+            this.current_view = new EnvironView({model:this.current_model});
             return this;
         },
         render: function(){

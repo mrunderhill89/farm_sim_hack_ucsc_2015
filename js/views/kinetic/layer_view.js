@@ -2,8 +2,9 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
     var LayerView = Backbone.View.extend({
         initialize: function(params){
             this.layer = (params && params.layer) 
-                || new Kinetic.Layer();
+                || new Kinetic.Group();
             this.sprite_views = [];
+            this.model_view = params.model_view || null;
             this.collection.on("add", this.add_sprite);
             this.collection.on("remove", this.remove_sprite);
             this.collection.each(this.add_sprite.bind(this));
@@ -23,25 +24,6 @@ define(['underscore', 'backbone', 'kinetic', 'views/kinetic/sprite_view'], funct
             
         },
         render: function(){
-            /*
-            this.sprite_views = _.reduce(
-                this.collection.map(
-                    function(model,id){
-                        var view;
-                        if(this.sprite_views[id]){  //Re-use existing model views if possible.
-                            view = this.sprite_views[id];
-                        } else {                    
-                            view.render();
-                        }
-                        this.layer.add(view.sprite);
-                        return view;
-                    }.bind(this))
-                , function(sprites, sprite,id){
-                    sprites[id] = sprite;
-                    return sprites;
-                }, []);
-            */
-            this.layer.batchDraw();
         }
     });
     return LayerView;
