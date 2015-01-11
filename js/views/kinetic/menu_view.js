@@ -8,7 +8,7 @@ define(['underscore', 'kinetic', 'bacon',
             this.x = (params && params.x) || 0;
             this.y = (params && params.y) || 0;
             this.streams = {new_stream: new Bacon.Bus()};
-            this.name = params.name || "";
+            this.name = params.name || "Button";
         },
         render: function(){
             this.parts = {
@@ -41,7 +41,7 @@ define(['underscore', 'kinetic', 'bacon',
             }));
             //Text
             this.parts.label.add(new Kinetic.Text({
-              text: this.name || '?',
+              text: this.name,
               fontSize: 16,
               lineHeight: 1.2,
               padding: 3,

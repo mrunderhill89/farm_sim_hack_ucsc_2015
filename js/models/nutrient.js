@@ -32,7 +32,7 @@ define(['underscore', 'backbone'],function(_, Backbone){
                     + defaults.constant;
             var health = Math.max(plant.get("health")+d_health,0);
             plant.set("health", health);
-            var drain = (defaults.drain * Math.sqrt(health));
+            var drain = (defaults.drain * Math.sqrt(health + 0.1));
             soil.set(this.name, Math.max(soil_value-drain,0));
         }
     });

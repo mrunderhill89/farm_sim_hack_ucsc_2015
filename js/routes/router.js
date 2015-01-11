@@ -15,7 +15,7 @@ define(['jquery', 'underscore', 'backbone', 'kinetic',
             this.stage = new Kinetic.Stage({
                 container: this.el,
                 width: (params && params.width) || 800,
-                height: (params && params.height) || 600
+                height: (params && params.height) || 800
             });
             this.reset(params);
             this.render();
