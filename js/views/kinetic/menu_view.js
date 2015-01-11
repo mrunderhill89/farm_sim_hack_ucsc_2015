@@ -8,26 +8,63 @@ define(['underscore', 'kinetic', 'bacon',
             this.x = (params && params.x) || 0;
             this.y = (params && params.y) || 0;
             this.streams = {new_stream: new Bacon.Bus()};
+            this.name = params.name || "";
         },
         render: function(){
-            this.sprite = new Kinetic.Rect({
-                x: this.x,
-                y: this.y,
-                width: this.width,
-                height: this.height,
-                fill: 'grey',
-                stroke: 'black',
-                strokeWidth: 3
-            });
+            this.parts = {
+                background: new Kinetic.Rect({
+                    x: 0,
+                    y: 0,
+                    width: this.width,
+                    height: this.height,
+                    fill: 'grey',
+                    stroke: 'black',
+                    strokeWidth: 3
+                }),
+                label: new Kinetic.Label({
+                    x: 32,
+                    y: 32
+                })
+            };
+            this.parts.label.hide();
+            //Tag
+            this.parts.label.add(new Kinetic.Tag({
+              fill: '#bbb',
+              stroke: '#333',
+              shadowColor: 'black',
+              opacity: 0.5,
+              lineJoin: 'round',
+              pointerDirection: 'down',
+              pointerWidth: 3,
+              pointerHeight: 3,
+              cornerRadius: 3
+            }));
+            //Text
+            this.parts.label.add(new Kinetic.Text({
+              text: this.name || '?',
+              fontSize: 16,
+              lineHeight: 1.2,
+              padding: 3,
+              fill: 'white'
+             }));
+            this.sprite = _.reduce(this.parts, function(group,sprite){
+                group.add(sprite);
+                return group;
+            }, new Kinetic.Group({
+                x:this.x,
+                y:this.y
+            }))
             this.stream("click","mouseup");
             this.stream("over", "mouseover").onValue(function(e){
-                e.target.fill('cyan');
-                e.target.draw();
-            });
+                this.parts.background.fill('cyan');
+                this.parts.label.show();
+                this.sprite.draw();
+            }.bind(this));
             this.stream("out", "mouseout").onValue(function(e){
-                e.target.fill('grey');
-                e.target.draw();
-            });
+                this.parts.background.fill('grey');
+                this.parts.label.hide();
+                this.sprite.draw();
+            }.bind(this));
             return this;
         }
     })
@@ -87,22 +124,27 @@ define(['underscore', 'kinetic', 'bacon',
             this.streams={};
             this.buttons = {
                 add_plant: new Button({
+                    name:"Add Plant",
                     x:0,
                     y:0,
                 }),
                 destroy_plant: new Button({
+                    name:"-Remove Plant",
                     x:32,
                     y:0
                 }),
                 add_soil: new Button({
+                    name:"-Add Soil",
                     x:0,
                     y:32
                 }),
                 remove_soil: new Button({
+                    name:"-Remove Soil",
                     x:32,
                     y:32
                 }),
                 add_water: new Button({
+                    name:"Water",
                     x:0,
                     y:64
                 })
