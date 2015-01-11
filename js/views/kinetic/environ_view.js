@@ -1,7 +1,9 @@
 define(['backbone', 'kinetic', 
         'views/kinetic/layer_view', 
         'models/environment',
-        'views/kinetic/soil_view','views/kinetic/plant_view','views/kinetic/menu_view'], function(Backbone, Kinetic, LayerView, Environment, SoilView, PlantView, MenuView){
+        'controllers/behavior_tree',
+        'views/kinetic/soil_view','views/kinetic/plant_view','views/kinetic/menu_view'], 
+       function(Backbone, Kinetic, LayerView, Environment,BehaviorTree, SoilView, PlantView, MenuView){
     var EnvironView = LayerView.extend({
         model: Environment,
         initialize: function(params){
