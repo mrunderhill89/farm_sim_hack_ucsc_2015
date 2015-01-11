@@ -18,9 +18,15 @@ define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic
                 stroke: 'black',
                 strokeWidth: 2
             });
-            this.sprite.on("mousedown touchstart", 
-                function(e){console.log(this.model)}.bind(this)
-            );
+            this.stream("click","mousedown");
+            this.stream("over", "mouseover").onValue(function(e){
+                e.target.fill('yellow');
+                e.target.draw();
+            });
+            this.stream("out", "mouseout").onValue(function(e){
+                e.target.fill('brown');
+                e.target.draw();
+            });
             //Do other graphics tweaks here.
             return this;
         }

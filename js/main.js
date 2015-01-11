@@ -4,7 +4,8 @@ require.config({
     underscore: 'libs/underscore/underscore',
     backbone: 'libs/backbone/backbone',
     backbone_associations: 'libs/backbone/backbone-associations',
-    kinetic: 'libs/kinetic/kinetic'
+    kinetic: 'libs/kinetic/kinetic',
+    bacon:'libs/bacon/bacon'
   },
     shims:{
         backbone_associations:{
