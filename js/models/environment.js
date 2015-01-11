@@ -8,13 +8,13 @@ define(['backbone', 'collections/garden', 'collections/plants', 'models/plant'],
             temperature: 65
         },
         initialize: function(params){
-            var garden = (params && params.garden) || new Garden().fill(5,5);
+            var garden = new Garden();
+            var width = (params && params.width) || 5;
+            var height = (params && params.height) || 5;
+            garden.fill(width, height);
             var plants = new Plants();
             this.set('garden', garden);
             this.set('plants', plants);
-            var sample_plant = new Plant();
-            garden.first().set("plant", sample_plant);
-            plants.add(sample_plant);
         },
         update: function(time){
             this.get('garden').each(function(soil){soil.update(time)});

@@ -16,7 +16,7 @@ define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic
                 height: this.height,
                 fill: 'brown',
                 stroke: 'black',
-                strokeWidth: 4
+                strokeWidth: 2
             });
             this.sprite.on("mousedown touchstart", 
                 function(e){console.log(this.model)}.bind(this)
