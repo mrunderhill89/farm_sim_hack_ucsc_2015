@@ -6,12 +6,12 @@ define(['underscore', 'bacon', 'backbone', 'kinetic', 'views/kinetic/sprite_view
             this.sprite_views = [];
             this.streams = {};
             this.model_view = params.model_view || null;
-            this.collection.on("add", this.add_sprite);
-            this.collection.on("remove", this.remove_sprite);
+            this.collection.on("add", this.add_sprite.bind(this));
+            this.collection.on("remove", this.remove_sprite.bind(this));
             this.collection.each(this.add_sprite.bind(this));
         },
-        add_sprite: function(model, id){
-            var view;
+        add_sprite: function(model, collection, options){
+            var view; var id = options.id || model.id || model.cid;
             if(this.model_view){ //Generate custom sprite if one is defined.
                 view = new this.model_view({model:model});
             } else { //Just make a default sprite.
@@ -24,7 +24,7 @@ define(['underscore', 'bacon', 'backbone', 'kinetic', 'views/kinetic/sprite_view
             view.render();
             this.layer.add(view.sprite);
         },
-        remove_sprite: function(model, id){
+        remove_sprite: function(model, collection, options){
             
         },
         render: function(){

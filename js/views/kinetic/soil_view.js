@@ -1,34 +1,23 @@
-define(['kinetic', 'views/kinetic/sprite_view', 'models/soil'], function(Kinetic, SpriteView, Soil){
-    var SoilView = SpriteView.extend({
+define(['bacon','kinetic', 'views/kinetic/texture_view', 'models/soil'], function(Bacon, Kinetic, TextureView, Soil){
+    var SoilView = TextureView.extend({
         width:  64,
         height: 64,
-        update: function(model, options){
-            //If the soil model changes, update the sprite here.
-        },
-        render: function(){
-            var soil = this.model;
-            var x = this.width * soil.get("x");
-            var y = this.width * soil.get("y");
-            this.sprite = new Kinetic.Rect({
-                x: x,
-                y: y,
-                width: this.width,
-                height: this.height,
-                fill: 'brown',
-                stroke: 'black',
-                strokeWidth: 2
-            });
-            this.stream("click","mousedown");
-            this.stream("over", "mouseover").onValue(function(e){
-                e.target.fill('yellow');
-                e.target.draw();
-            });
-            this.stream("out", "mouseout").onValue(function(e){
-                e.target.fill('brown');
-                e.target.draw();
-            });
-            //Do other graphics tweaks here.
-            return this;
+        initialize: function(params){
+            this.streams = {
+                new_stream: new Bacon.Bus(),
+                image: new Bacon.Bus()
+            };
+            var image = new Image();
+            image.onload = function() {
+                console.log("image loaded");
+                this.stream("image").push(image);
+            }.bind(this)
+            image.src = params.src || "img/land_256px.png";
+            if (this.model){
+                this.model.on("change", this.update.bind(this));
+            }
+            this.x = this.model.get("x") * this.width;
+            this.y = this.model.get("y") * this.height;
         }
     });
     return SoilView;

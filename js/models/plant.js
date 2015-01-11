@@ -14,6 +14,14 @@ define(['underscore','backbone_associations', 'collections/nutrients', 'models/s
             },
         ],
         draw_soil: function(time, soil){
+            _.each(Nutrients.defaults, function(nutrient){
+                if(this.get("calculate_nutrient")[name]){
+                    this.calculate_nutrient[name](this, soil, time);
+                } else {
+                    nutrient.default_calculate(this, soil, time);
+                }
+            }.bind(this));
+            /*
             var health = _.reduce(Nutrients.defaults,
                 function(health, nutrient, name){
                     var soil_value = soil.get(name) || 0.0;
@@ -25,8 +33,12 @@ define(['underscore','backbone_associations', 'collections/nutrients', 'models/s
                 }.bind(this),
                 this.get("health"));
             this.set("health", health);
+            */
         },
         update: function(time){
+        },
+        toString:function(){
+            return "Plant#"+this.cid+"\n"+this.get("health");
         }
     });
     return Plant;

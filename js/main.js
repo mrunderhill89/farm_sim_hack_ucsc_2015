@@ -18,7 +18,7 @@ require.config({
 require(['routes/router'],
     function(router){
     // Simple main loop for real-time updates. Replace later with RequestAnimationFrame.
-    var ONE_FRAME_TIME = 100.0;
+    var ONE_FRAME_TIME = 200.0;
     function mainLoop(){
         router.update();
     }

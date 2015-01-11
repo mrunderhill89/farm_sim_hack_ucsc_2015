@@ -32,6 +32,14 @@ define(['underscore','backbone', 'models/soil'],function(_, Backbone, Soil){
             }
             this.grid[x][y] = model;
         },
+        get_grid: function(x,y){
+            if (this.grid[x]){
+                if (this.grid[x][y]){
+                    return grid[x][y];
+                }
+            }
+            return undefined;
+        },
         save: function(){},
         load: function(){},
         fetch: function(){}                                            

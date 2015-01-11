@@ -4,17 +4,29 @@ define(['underscore','backbone', 'models/nutrient'],function(_,Backbone, Nutrien
     });
     var defaultNutrients = {
         ph : new Nutrient({
+            name:"ph",
             plant_defaults:{
-                min:6.8,
-                max:7.2,
-                multiplier:0.1
+                min:6.80,
+                max:7.20,
+                multiplier:0.001,
+                drain:0.0
+            },
+            soil_defaults:{
+                min:6.40,
+                max:7.60
             }
         }),
         water: new Nutrient({
+            name:"water",
             plant_defaults:{
-                min:0.2,
-                max:0.8,
-                multiplier:0.3
+                min:60.0,
+                max:80.0,
+                multiplier:0.1,
+                drain:0.02
+            },
+            soil_defaults:{
+                min: 20.0,
+                max: 90.0
             }
         })
     };
