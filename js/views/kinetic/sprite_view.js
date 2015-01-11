@@ -1,11 +1,12 @@
 define(['bacon','underscore', 'backbone', 'kinetic'], function(Bacon, _, Backbone, Kinetic){
     var SpriteView = Backbone.View.extend({
         initialize: function(params){
-            this.model.on("change", this.update.bind(this));
             this.streams = {
                 new_stream: new Bacon.Bus()
             };
-            
+            if (this.model){
+                this.model.on("change", this.update.bind(this));
+            }
         },
         update: function(model, options){
         },

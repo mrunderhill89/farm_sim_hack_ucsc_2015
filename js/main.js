@@ -15,9 +15,8 @@ require.config({
     }
 });
 
-require(['jquery', 'underscore', 'backbone', 'models/plant', 'views/plant_view',
-        'models/soil', 'views/soil_view', 'models/environment', 'views/environ_view', 'routes/router'],
-    function($, _, Backbone, Plant, PlantView, Soil, SoilView, Environment, EnvironView, router){
+require(['routes/router'],
+    function(router){
     // Simple main loop for real-time updates. Replace later with RequestAnimationFrame.
     var ONE_FRAME_TIME = 100.0;
     function mainLoop(){

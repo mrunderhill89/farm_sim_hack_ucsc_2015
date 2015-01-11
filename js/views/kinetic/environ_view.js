@@ -13,7 +13,6 @@ define(['backbone', 'kinetic',
                 model_view:SoilView,
                 collection:this.model.get("garden")
             });
-            this.soil_view.stream("click").onValue(function(){console.log("Got it!");});
             this.field.add(this.soil_view.layer);
 
             this.plant_view = new LayerView({
@@ -24,6 +23,8 @@ define(['backbone', 'kinetic',
             this.layer.add(this.field);
             
             this.menu = new MenuView();
+            this.menu.stream("click")
+                .onValue(function(label){console.log(label)});
             this.layer.add(this.menu.layer);
         },
         render:function(){
