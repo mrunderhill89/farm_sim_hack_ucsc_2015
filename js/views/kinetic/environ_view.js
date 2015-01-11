@@ -45,11 +45,19 @@ define(['backbone', 'kinetic',
             }.bind(this))
         },
         control: function(e){
+            console.log(e);
             if (e.menu === "add_plant"){
-                console.log(e.menu);
                 if (e.field.class == "soil"){
                     this.add_plant(e.field.model);
                 }
+            } else if (e.menu === "add_water"){
+                var tile;
+                if (e.field.class == "soil"){
+                    tile = e.field.model;
+                } else {
+                    tile = e.field.model.get("footprint").first();
+                }
+                this.add_water(tile, 3.0);
             }
         },
         add_plant: function(tile,type){
@@ -57,12 +65,14 @@ define(['backbone', 'kinetic',
             var plants = this.model.get("plants");
             if (!tile.get("plant")){
                 var plant = new type({species:"Lettuce"});
-                console.log(plant);
                 plant.get("footprint").push(tile);
                 tile.set("plant",plant);
                 plants.add(plant);
                 this.render();
             }
+        },
+        add_water: function(tile, amount){
+            tile.set("water", amount+tile.get("water"));
         },
         render:function(){
             this.soil_view.render();

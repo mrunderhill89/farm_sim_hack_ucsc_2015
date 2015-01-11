@@ -20,13 +20,13 @@ define(['underscore','backbone', 'models/nutrient'],function(_,Backbone, Nutrien
             name:"water",
             plant_defaults:{
                 min:60.0,
-                max:80.0,
+                max:90.0,
                 multiplier:0.1,
                 drain:0.02
             },
             soil_defaults:{
                 min: 20.0,
-                max: 90.0
+                max: 80.0
             }
         })
     };

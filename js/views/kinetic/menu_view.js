@@ -101,6 +101,10 @@ define(['underscore', 'kinetic', 'bacon',
                 remove_soil: new Button({
                     x:32,
                     y:32
+                }),
+                add_water: new Button({
+                    x:0,
+                    y:64
                 })
             };
             _.each(this.buttons, function(button,name){

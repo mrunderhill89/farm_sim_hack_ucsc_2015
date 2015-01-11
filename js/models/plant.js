@@ -38,7 +38,8 @@ define(['underscore','backbone_associations', 'collections/nutrients', 'models/s
         update: function(time){
         },
         toString:function(){
-            return "Plant#"+this.cid+"\n"+this.get("health");
+            return "Plant#"+this.cid+"\n"+this.get("health")
+                +"\n"+this.get("footprint").reduce(function(string, soil){return string.concat(soil.toString());},"");
         }
     });
     return Plant;
